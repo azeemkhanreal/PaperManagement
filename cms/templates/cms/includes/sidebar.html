@@ -1,0 +1,146 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'cms_home' %}">
+        <div class="sidebar-brand-icon rotate-n-15">
+        <i class="fas fa-newspaper"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">AMAR UJALA</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'cms_home' %}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Customer
+    </div>
+{% with url_name=request.resolver_match.url_name %}
+
+<!-- Nav Item - Customer Collapse Menu -->
+<li {% if url_name == 'customer_report' or url_name == 'add_customer' %}class='active nav-item' {% else %}class='nav-item' {% endif %}>
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomer" aria-expanded="true"
+        aria-controls="collapsePages">
+        <i class="fas fa-users"></i>
+        <span>Customer Information</span>
+    </a>
+    <div id="collapseCustomer" {% if url_name == 'customer_report' or url_name == 'add_customer' %}class='show collapse' {% else %}class='collapse'
+            {% endif %}  aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Customer</h6> -->
+            <a {% if url_name == 'customer_report' %}class='active collapse-item' {% else %}class='collapse-item' {% endif %}
+                href="{% url 'customer_report' %}">Customer Report</a>
+            <a {% if url_name == 'add_customer' %}class='active collapse-item' {% else %}class='collapse-item' {% endif %}
+                 href="{% url 'add_customer' %}">Add Customer</a>
+            <!-- <a class='collapse-item' href="{% url 'add_customer' %}">Balance Report</a> -->
+            <!-- <a class='collapse-item' href="{% url 'add_customer' %}">Manage Pepar Cost</a> -->
+        </div>
+    </div>
+</li>
+
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+    Hawker
+</div>
+
+
+<!-- Nav Item - Customer Collapse Menu -->
+<li {% if url_name == 'hawker_report' or url_name == 'add_hawker' %}class='active nav-item' {% else %}class='nav-item' {% endif %}>
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHawker" aria-expanded="true"
+        aria-controls="collapsePages">
+        <i class="fas fa-users"></i>
+        <span>Hawker Information</span>
+    </a>
+    <div id="collapseHawker" {% if url_name == 'hawker_report' or url_name == 'add_hawker' %}class='show collapse' {% else %}class='collapse'
+            {% endif %}  aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Customer</h6> -->
+            <a {% if url_name == 'hawker_report' %}class='active collapse-item' {% else %}class='collapse-item' {% endif %} href="{% url 'hawker_report' %}">Hawker Report</a>
+            <a {% if url_name == 'add_hawker' %}class='active collapse-item' {% else %}class='collapse-item' {% endif %} href="{% url 'add_hawker' %}">Add Hawker</a>
+            <!-- <a class='collapse-item' href="{% url 'add_customer' %}">Payroll</a>
+            <a class='collapse-item' href="{% url 'add_customer' %}">Payroll Report</a> -->
+
+        </div>
+    </div>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+    Communication
+</div>
+
+
+<!-- Nav Item - Customer Collapse Menu -->
+<li class='nav-item'>
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCommunicate" aria-expanded="true"
+        aria-controls="collapsePages">
+        <i class="fas fa-users"></i>
+        <span>Communicate</span>
+    </a>
+    <div id="collapseCommunicate" class='collapse' aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Customer</h6> -->
+            <a class='collapse-item' href="{% url 'customer_report' %}">Send Message</a>
+            <a class='collapse-item' href="{% url 'add_customer' %}">Send Email</a>
+            <a class='collapse-item' href="{% url 'add_customer' %}">Email/Message Log</a>
+        </div>
+    </div>
+</li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Settings
+    </div>
+
+
+<!-- Nav Item - Customer Collapse Menu -->
+<li class='nav-item'>
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSetting"
+        aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-users"></i>
+        <span>Settings</span>
+    </a>
+    <div id="collapseSetting" class='collapse' aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Customer</h6> -->
+            <a class='collapse-item' href="{% url 'customer_report' %}">Send Message</a>
+            <a class='collapse-item' href="{% url 'add_customer' %}">Send Email</a>
+            <a class='collapse-item' href="{% url 'add_customer' %}">Email/Message Log</a>
+        </div>
+    </div>
+</li>
+
+
+{% endwith %}
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+<!-- End of Sidebar -->

@@ -1,0 +1,47 @@
+{% extends "cms/base.html" %}
+{% block content %}
+
+<div class="container">
+
+    <div class="container" id="customer" class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fas fa-user-plus"></i> Add Hawker</h3>
+        </div>
+        <form action="{% url 'add_hawker' %}" method="POST" enctype="multipart/form-data" class="add_customer_form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" name="hawker_date" id="" value="{{current_date|date:'Y-m-d'}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Hawker Name <span name="required" style="color:red; padding-left:5px">*</span></label>
+                        <input name='hawker_name' type="text" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input name="hawker_mobile" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Address</label> <br>
+                        <textarea name="hawker_address" style="width: -moz-available;"></textarea>
+                    </div>
+                </div>
+                                <button type="submit" name="button">Save</button>
+
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

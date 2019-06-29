@@ -1,0 +1,161 @@
+{% extends "cms/base.html" %}
+{% block content %}
+<div class="container">
+
+<!-- <div class="container" id="customer" class="box">
+    <div class="col-md-12 search_form">
+        <form method="post" action="{% url 'search_customer' %}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-10">
+                    <input type="text" name="search" class="form-control"
+                        placeholder="Search by Customer Name, Mobile Number">
+                </div>
+                <button type="submit" name="button">Filter</button>
+
+            </div>
+        </form>
+    </div>
+</div> -->
+
+<div class="student_reports box" id="customer">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fas fa-user-plus"></i> Customer Reports</h3>
+    </div>
+
+<div class="data-table">
+    <div class="row">
+        <div class="col-md-12">
+
+            <table id="customerReportTable" class="display table-bordered  table table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Paper Started From</th>
+                        <th>Mobile Number</th>
+                        <th>Address</th>
+                        <th>Hawker Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{customer.customer_name}}</td>
+                        <td>{{customer.customer_date|date:'d-m-y'}}</td>
+                        <td>{{customer.customer_mobile}}</td>
+                        <td>{{customer.customer_address}}</td>
+                        <td>{{customer.hawker}}</td>
+                        <td>
+                            <a href="#ab{{customer.customer_id}}" data-toggle="modal" data-target="#ab{{customer.customer_id}}" title="edit customer"
+                                class="btn btn-default btn-sm "> <i class="fas fa-edit"></i></a>
+                            <a href="{% url 'collect_amount' pk=customer.pk %}" title="collect_amount"
+                                class="btn btn-default btn-sm ">
+                                <i class="fas fa-rupee-sign"></i></a>
+                            <a href="#deleteModal" title="delete this user" class="btn btn-default btn-sm"
+                                data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash-alt"></i></a>
+
+                                    <!-- Customer Edit Modal -->
+                                    <div id="ab{{customer.customer_id}}" class="modal fade edit_customer_modal">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title title text-center fees_title"><b>Edit Customer</b></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{% url 'customer_update' pk=customer.pk %}" method="POST" enctype="multipart/form-data"
+                                                    class="invoice">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+
+                                                        <input type="hidden" name="c_id" value="{{customer.customer_id}}">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Customer Name <span name="required" style="color:red; padding-left:5px">*</span></label>
+                                                            <input name='customer_name' type="text" class="form-control" value="{{customer.customer_name}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Hawker Name <span name="required" style="color:red; padding-left:5px">*</span></label>
+                                                            <select name="hawker_name" class="form-control">
+                                                                {% for hawker in all_hawker %}
+                                                                <option value="{{hawker.hawker_name}}">{{hawker.hawker_name}}</option>
+                                                                {% endfor %}
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Mobile Number</label>
+                                                            <input name="customer_mobile" type="text" class="form-control" value="{{customer.customer_mobile}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>E-mail</label>
+                                                            <input name="customer_email" type="email" class="form-control" value="{{customer.customer_email}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Address</label> <br>
+                                                            <textarea name="customer_address" style="width: -moz-available;" value="{{customer.customer_address}}"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary" type="submit" name="button">Save</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- endmodal edit hawker  -->
+
+                        <!-- delete Modal -->
+                            <div id="deleteModal" class="modal fade">
+                                <div class="modal-dialog modal-confirm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title">Are you sure?</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Do you really want to delete these records? This process cannot be
+                                                undone.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-info"
+                                                data-dismiss="modal">Cancel</button>
+                                            <a href="{% url 'delete_customer' pk=customer.pk %}"><button
+                                                    type="button" class="btn btn-danger">Delete</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end delete model -->
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+</div>
+{% endblock %}

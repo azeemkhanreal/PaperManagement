@@ -1,0 +1,122 @@
+{% extends "cms/base.html" %}
+{% block content %}
+<div class="container">
+
+    <div class="student_reports box" id="customer">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fas fa-user-plus"></i> Hawker Report</h3>
+        </div>
+
+        <div class="data-table">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <table id="HawkerReportTable" class="display table-bordered  table table-hover"
+                        style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Mobile Number</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for hawker in hawker %}
+                            <tr>
+                                <td>{{hawker.hawker_name}}</td>
+                                <td>{{hawker.hawker_mobile}}</td>
+                                <td>{{hawker.hawker_address}}</td>
+                                <td>
+                                    <a href="#ab{{hawker.hawker_id}}" data-toggle="modal" data-target="#ab{{hawker.hawker_id}}" title="edit hawker" class="btn btn-default btn-sm "> <i
+                                            class="fas fa-edit"></i></a>
+                                    <!-- <a href="#" title="collect_amount"
+                                        class="btn btn-default btn-sm ">
+                                        <i class="fas fa-rupee-sign"></i></a> -->
+                                    <a href="#deleteModal" title="delete this user" class="btn btn-default btn-sm"
+                                        data-toggle="modal" data-target="#deleteModal"><i
+                                            class="fas fa-trash-alt"></i></a>
+
+<!-- Hawker Edit Modal -->
+<div id="ab{{hawker.hawker_id}}" class="modal fade edit_hawker_modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title title text-center fees_title"><b>Edit Hawker</b></h4>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'hawker_update' pk=hawker.pk %}" method="POST" enctype="multipart/form-data" class="invoice">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        <input type="hidden" name="c_id" value="{{customer.customer_id}}">
+
+                        <div class="col-md-4">
+                            <label>Hawker Name</label>
+                            <input name="hawker_name" type="text" class="form-control" value="{{hawker.hawker_name}}">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Hawker Mobile</label>
+                            <input name="hawker_mobile" type="text" class="form-control" value="{{hawker.hawker_mobile}}">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Hawker Address</label>
+                            <input name="hawker_address" type="text" class="form-control" id="i_month"
+                                value="{{hawker.hawker_address}}">
+                        </div>
+ 
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" name="button">Save</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- endmodal edit hawker  -->
+                                            
+                                    <!-- delete Modal -->
+                                    <div id="deleteModal" class="modal fade">
+                                        <div class="modal-dialog modal-confirm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+
+                                                    <h4 class="modal-title">Are you sure?</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Do you really want to delete these records? This process cannot
+                                                        be
+                                                        undone.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-info"
+                                                        data-dismiss="modal">Cancel</button>
+                                                    <a href="{% url 'delete_hawker' pk=hawker.pk %}"><button type="button"
+                                                            class="btn btn-danger">Delete</button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end delete model -->
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
