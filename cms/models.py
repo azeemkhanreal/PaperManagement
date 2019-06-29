@@ -36,9 +36,9 @@ class Invoice(models.Model):
     i_sr = models.CharField(max_length=40, default="")
     i_date = models.DateTimeField(blank=True, null=True)
     i_month = models.CharField(max_length=40, default="")
-    i_amount = models.IntegerField(null=True)
+    i_amount = models.IntegerField()
     i_status = models.CharField(max_length=40, default="")
-    i_paid = models.IntegerField(null=True)
+    i_paid = models.IntegerField()
     i_description = models.CharField(max_length=40, default="")
     class Meta:
         verbose_name_plural = 'invoice'
