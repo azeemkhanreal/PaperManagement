@@ -23,7 +23,8 @@ def cms_home(request):
 
         all_hawker = Hawker.objects.all()
 
-        return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'all_hawker': all_hawker, 'username': username})
+        collection_chart = Invoice.objects.filter(i_status='Paid').annotate(Sum('i_paid'))
+        return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'all_hawker': all_hawker,'collection_chart': collection_chart, 'username': username})
     
     else:
         return redirect('login')
