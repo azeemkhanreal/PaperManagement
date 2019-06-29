@@ -100,7 +100,10 @@ def collect_amount(request,pk):
             invoice_description = request.POST['i_desc']
             invoice_amount = request.POST['i_total']
             invoice_name = request.POST['customer_name']
-            invoice_paid = request.POST['i_paid']
+            try:
+                invoice_paid = request.POST['i_paid']
+            except:
+                invoice_paid=0
             i_customer = Customer.objects.get(customer_name=invoice_name)
             invoice_info = Invoice(customer_id=i_customer, i_sr=invoice_sr, i_date=invoice_date, i_month=invoice_month, i_amount=invoice_amount,
                                 i_description=invoice_description, i_status=invoice_status, i_paid=invoice_paid)
