@@ -47,7 +47,7 @@ def cms_home(request):
                 month_cost_info = monthCost(month=x, amount=0)
                 month_cost_info.save()
 
-        return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'all_hawker': all_hawker, 'collection_chart': collection_chart, 'collect_month_amount': collect_month_amount, 'collect_annual_amount': collect_annual_amount, 'username': username})
+        return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'all_hawker': all_hawker, 'collection_chart': collection_chart, 'collect_month_amount': collect_month_amount, 'collect_annual_amount': collect_annual_amount, 'username': username,'last_month_name':last_month_name})
 
     else:
         return redirect('login')
