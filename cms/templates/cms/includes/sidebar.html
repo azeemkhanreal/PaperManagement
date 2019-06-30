@@ -95,18 +95,20 @@
     </div>
 
 
-    <!-- Nav Item - Customer Collapse Menu -->
-    <li class='nav-item'>
+    <!-- Nav Item - Communication Collapse Menu -->
+    <li {% if url_name == 'send_email' %}class='active nav-item' {% else %}class='nav-item' {% endif %}>
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCommunicate"
             aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-users"></i>
             <span>Communicate</span>
         </a>
-        <div id="collapseCommunicate" class='collapse' aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapseCommunicate" {% if url_name == 'send_email' %}class='show collapse' {% else %}class='collapse'
+            {% endif %} aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <h6 class="collapse-header">Customer</h6> -->
                 <a class='collapse-item' href="{% url 'customer_report' %}">Send Message</a>
-                <a class='collapse-item' href="{% url 'add_customer' %}">Send Email</a>
+                <a {% if url_name == 'send_email' %}class='active collapse-item' {% else %}class='collapse-item'
+                    {% endif %} href="{% url 'send_email' %}">Send Email</a>
                 <a class='collapse-item' href="{% url 'add_customer' %}">Email/Message Log</a>
             </div>
         </div>
