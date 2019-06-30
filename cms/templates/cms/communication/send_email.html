@@ -1,0 +1,45 @@
+{% extends "cms/base.html" %}
+{% block content %}
+
+<div class="container">
+
+<div class="container" id="customer" class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fas fa-paper-plane"></i> Send Email</h3>
+    </div>
+    <form action="{% url 'add_customer' %}" method="POST" enctype="multipart/form-data" class="add_customer_form" style="padding:0px">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+            <label>Send to<small style="color:red"> *</small></label>
+            <label class="checkbox-inline">
+                <input type="checkbox" value="mail" name="all_customers"> &nbsp; All Customers  
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" value="sms" name="all_hawkers"> &nbsp; All Hawkers     
+            </label>
+
+            <span class="text-danger"></span>
+        </div>
+            </div>
+
+        
+            <div class="col-md-12">
+				<div class="form-group">
+						<textarea class="form-control" id="message" name="body" rows="12" placeholder="Click here to reply"></textarea>
+					</div>
+            </div>            
+
+            <button type="submit" name="button">Send</button>
+        </div>
+        <h6 style="color:red"></h6>
+
+    </form>
+</div>
+
+
+</div>
+
+
+{% endblock %}

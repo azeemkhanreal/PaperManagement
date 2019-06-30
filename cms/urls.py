@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from cms import views, hawker
+from cms import views, hawker, communication
 urlpatterns = [
     path("", views.cms_home, name="cms_home"),
     path('add_customer/', views.add_customer, name="add_customer"),
@@ -13,11 +13,13 @@ urlpatterns = [
     path('search_customer/', views.search_customer, name="search_customer"),
     path('manage_month_cost/', views.manage_month_cost, name="manage_month_cost"),
 
-
     # Hawker Routing
     path('add_hawker/', hawker.add_hawker, name="add_hawker"),
     path('delete_hawker/<int:pk>', hawker.delete_hawker, name="delete_hawker"),
     path('hawker_report/', hawker.hawker_report, name="hawker_report"),
     path('hawker_update/<int:pk>', hawker.hawker_update, name="hawker_update"),
+
+    # Communication
+    path('send_email/', communication.send_email, name="send_email"),
 
 ]
