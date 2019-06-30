@@ -15,6 +15,7 @@ month_name = "January Fabruary March April May June July August September Octobe
 # CMS Dashboard
 ###################
 
+
 def cms_home(request):
     if request.session.has_key('username'):
         username = request.session['username']
@@ -25,18 +26,24 @@ def cms_home(request):
 
         collect_month_amount = Invoice.objects.filter(
             i_status='Paid', i_month=month_name).aggregate(Sum('i_paid'))
+
         collect_annual_amount = Invoice.objects.filter(
             i_status='Paid').aggregate(Sum('i_paid'))
+        print(collect_annual_amount['i_paid__sum'])
+
+        #  Amount Collection Charts  JS
 
         collection_chart = Invoice.objects.filter(
             i_status='Paid').annotate(Sum('i_paid'))
+        for x in collection_chart:
+            print(x.i_month)
 
-        return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'collect_month_amount':collect_month_amount,'collect_annual_amount':collect_annual_amount,'collection_chart':collection_chart, 'all_hawker': all_hawker, 'username': username})
-    
+        return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'all_hawker': all_hawker, 'collection_chart': collection_chart, 'collect_month_amount': collect_month_amount, 'collect_annual_amount': collect_annual_amount, 'username': username})
+
     else:
         return redirect('login')
 
-# Add Customer 
+# Add Customer
 
 
 def add_customer(request):
@@ -52,13 +59,13 @@ def add_customer(request):
             customer_address = request.POST["customer_address"]
             customer_date = datetime.date.today()
             hawker_name = request.POST['hawker_name']
-            hawker= Hawker.objects.get(hawker_name=hawker_name)
+            hawker = Hawker.objects.get(hawker_name=hawker_name)
             customer_info = Customer(customer_name=customer_name, customer_mobile=customer_mobile,
-                                customer_address=customer_address, customer_date=customer_date,hawker = hawker)
+                                     customer_address=customer_address, customer_date=customer_date, hawker=hawker)
             customer_info.save()
 
         return render(request, 'cms/customer/add_customer.html', {'current_date': current_date, 'all_hawker': all_hawker, 'username': username})
- 
+
     else:
         return redirect('login')
 
@@ -75,14 +82,12 @@ def customer_report(request):
         all_hawker = Hawker.objects.all()
 
         return render(request, 'cms/customer/customer_report.html', {'customers': all_customer, 'all_hawker': all_hawker})
-    
+
     else:
         return redirect('login')
 
 
-
-
-def collect_amount(request,pk):
+def collect_amount(request, pk):
     if request.session.has_key('username'):
         username = request.session['username']
 
@@ -108,13 +113,10 @@ def collect_amount(request,pk):
             invoice_description = request.POST['i_desc']
             invoice_amount = request.POST['i_total']
             invoice_name = request.POST['customer_name']
-            try:
-                invoice_paid = request.POST['i_paid']
-            except:
-                invoice_paid=0
+            invoice_paid = request.POST['i_paid']
             i_customer = Customer.objects.get(customer_name=invoice_name)
             invoice_info = Invoice(customer_id=i_customer, i_sr=invoice_sr, i_date=invoice_date, i_month=invoice_month, i_amount=invoice_amount,
-                                i_description=invoice_description, i_status=invoice_status, i_paid=invoice_paid)
+                                   i_description=invoice_description, i_status=invoice_status, i_paid=invoice_paid)
             invoice_info.save()
 
             return HttpResponseRedirect("")
@@ -124,11 +126,24 @@ def collect_amount(request,pk):
     else:
         return redirect('login')
 
-def invoice_update(request,pk):
+
+def delete_invoice(request, pk):
     if request.session.has_key('username'):
         username = request.session['username']
-        
-        if request.method=='POST':
+
+        invoice_filter = Invoice.objects.get(id=pk)
+        if invoice_filter:
+            invoice_filter.delete()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        return redirect('login')
+
+
+def invoice_update(request, pk):
+    if request.session.has_key('username'):
+        username = request.session['username']
+
+        if request.method == 'POST':
             invoice_filter = Invoice.objects.get(id=pk)
             invoice_filter.i_sr = request.POST['i_sr']
             invoice_filter.i_date = request.POST['i_date']
@@ -140,10 +155,11 @@ def invoice_update(request,pk):
             c_id = request.POST['customer_id']
             invoice_filter.save()
 
-            return redirect('collect_amount',pk =c_id)
+            return redirect('collect_amount', pk=c_id)
 
     else:
         return redirect('login')
+
 
 def customer_update(request, pk):
     if request.session.has_key('username'):
@@ -163,7 +179,7 @@ def customer_update(request, pk):
             return redirect('customer_report')
 
         return redirect('customer_report')
-   
+
     else:
         return redirect('login')
 

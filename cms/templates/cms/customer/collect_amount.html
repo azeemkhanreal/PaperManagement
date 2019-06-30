@@ -6,37 +6,37 @@
         <div class="box-header with-border">
             <h3 class="box-title"><i class="fas fa-rupee-sign"></i> Fee Collection </h3>
         </div>
-                <div class="row">
-                    <table class="table table-striped mb0 font13">
-                        <tbody>
-                            <tr>
-                                <th class="bozero">Name</th>
-                                <td class="bozero">{{customer.customer_name}}</td>
-            
-                                <th class="bozero">Hawker Name</th>
-                                <td class="bozero">{{customer.hawker}} </td>
+        <div class="row">
+            <table class="table table-striped mb0 font13">
+                <tbody>
+                    <tr>
+                        <th class="bozero">Name</th>
+                        <td class="bozero">{{customer.customer_name}}</td>
 
-                                <th class="bozero">Paper Starting From</th>
-                                <td class="bozero">{{customer.customer_date|date:'d-m-y'}}</td>
-                            </tr>
-                            <tr>
-                                <th>Mobile Number</th>
-                                <td>{{customer.customer_mobile}}</td>
-                                <th>Email</th>
-                                <td>{{customer.customer_email}}</td>
-                                <th>Address</th>
-                                <td>{{customer.customer_address}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </div>
+                        <th class="bozero">Hawker Name</th>
+                        <td class="bozero">{{customer.hawker}} </td>
+
+                        <th class="bozero">Paper Starting From</th>
+                        <td class="bozero">{{customer.customer_date|date:'d-m-y'}}</td>
+                    </tr>
+                    <tr>
+                        <th>Mobile Number</th>
+                        <td>{{customer.customer_mobile}}</td>
+                        <th>Email</th>
+                        <td>{{customer.customer_email}}</td>
+                        <th>Address</th>
+                        <td>{{customer.customer_address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="student_reports box" id="customer">
         <div class="box-header with-border text-right">
             <a href="#pay_amount" data-toggle="modal" data-target="#pay_amount">
                 <h3 class="box-title"><i class="fas fa-rupee-sign">
-                </i> Invoice Generate </h3>
+                    </i> Invoice Generate </h3>
             </a>
         </div>
         <div class="data-table">
@@ -46,7 +46,7 @@
                         style="width:100%">
                         <thead>
                             <tr>
-                                <th>Payment ID</th>                    
+                                <th>Payment ID</th>
                                 <th>Fee Month</th>
                                 <th>Invoice Date</th>
                                 <th>Status</th>
@@ -63,151 +63,202 @@
                                 <td>{{invoice.i_month}}</td>
                                 <td>{{invoice.i_date|date:'d-m-y'}}</td>
                                 {% if invoice.i_status == 'Paid' %}
-                                    <td><p class="i_paid" >{{invoice.i_status}}</p></td>
+                                <td>
+                                    <p class="i_paid">{{invoice.i_status}}</p>
+                                </td>
                                 {% elif invoice.i_status == 'Partial' %}
-                                    <td><p class="i_partial" >{{invoice.i_status}}</p></td>
+                                <td>
+                                    <p class="i_partial">{{invoice.i_status}}</p>
+                                </td>
                                 {% elif invoice.i_status == 'Unpaid' %}
-                                    <td><p class="i_unpaid" >{{invoice.i_status}}</p></td>
+                                <td>
+                                    <p class="i_unpaid">{{invoice.i_status}}</p>
+                                </td>
                                 {% endif %}
                                 <td>{{invoice.i_amount}}</td>
                                 <td>{{invoice.i_paid}}</td>
                                 <td>
-                                    <a href="#{{invoice.i_sr}}" data-toggle="modal" data-target="#{{invoice.i_sr}}" title="view this user" class="btn btn-default btn-sm "> <i class="fas fa-receipt"></i> </a>
-                                    <a href="#{{invoice.i_sr}}a" title="edit invoice" class="btn btn-default btn-sm " data-toggle="modal" data-target="#{{invoice.i_sr}}a"> <i
+                                    <a href="#{{invoice.i_sr}}" data-toggle="modal" data-target="#{{invoice.i_sr}}"
+                                        title="view this user" class="btn btn-default btn-sm "> <i
+                                            class="fas fa-receipt"></i> </a>
+                                    <a href="#{{invoice.i_sr}}a" title="edit invoice" class="btn btn-default btn-sm "
+                                        data-toggle="modal" data-target="#{{invoice.i_sr}}a"> <i
                                             class="fas fa-edit"></i></a>
+                                    <a href="#deleteModal" title="delete this user" class="btn btn-default btn-sm"
+                                        data-toggle="modal" data-target="#deleteModal"><i
+                                            class="fas fa-trash-alt"></i></a>
 
                                     <!-- view Invoice -->
                                     <!-- Modal -->
                                     <div id="{{invoice.i_sr}}" class="modal fade view-invoice">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <div class="col-md-6 clg_logo text-left">
-                                                    <img src="http://himsonepat.org/him/wp-content/uploads/2015/07/amar-ujala-logo.png" alt=""
-                                                        width="200px">
-                                                </div>
-                                                <div class="col-md-6 text-right">
-                                                    <h1 style="font-size: 15px;text-transform: uppercase;">
-                                                        Invoice</h1>
-                                                    <p style="font-size: 13px;text-transform: uppercase;">
-                                                        #{{ invoice.i_sr}}</p>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-md-6 text-left">
-                                                        <p style="text-transform:uppercase">{{customer.customer_name}}</p>
-                                                        <p>Mobile- +91-9870318584</p>
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="col-md-6 clg_logo text-left">
+                                                        <img src="http://himsonepat.org/him/wp-content/uploads/2015/07/amar-ujala-logo.png"
+                                                            alt="" width="200px">
                                                     </div>
                                                     <div class="col-md-6 text-right">
-                                                        <p>Invoice Date: &nbsp; {{ invoice.i_date|date:"M d, Y" }} </p>
-                                                        <p>Invoice Status:&nbsp; <b>
-                                                                {{ invoice.i_status }} </b></p>
-                                                        <p>Hawker :&nbsp; <b>
-                                                                {{ customer.hawker }} </b></p>
+                                                        <h1 style="font-size: 15px;text-transform: uppercase;">
+                                                            Invoice</h1>
+                                                        <p style="font-size: 13px;text-transform: uppercase;">
+                                                            #{{ invoice.i_sr}}</p>
 
                                                     </div>
+
                                                 </div>
-                                                <div class="row">
-                                                    <table class="display table-bordered  table table-hover" style="width:95%; margin:auto">
-                                                        <tr>
-                                                            <th>Description</th>
-                                                            <th>Payable Amount</th>
-                                                            <th>Paid Amount</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>{{ invoice.i_month }}</td>
-                                                            <td>{{ invoice.i_amount }} ₹</td>
-                                                            <td>{{ invoice.i_paid }} ₹</td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                                <div class="sign" style="float: right;padding: 25px;">
+                                                <div class="modal-body">
                                                     <div class="row">
-                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Signature-WangBowen.png"
-                                                            width="100px" alt="">
+                                                        <div class="col-md-6 text-left">
+                                                            <p style="text-transform:uppercase">
+                                                                {{customer.customer_name}}</p>
+                                                            <p>Mobile- +91-9870318584</p>
+                                                        </div>
+                                                        <div class="col-md-6 text-right">
+                                                            <p>Invoice Date: &nbsp; {{ invoice.i_date|date:"M d, Y" }}
+                                                            </p>
+                                                            <p>Invoice Status:&nbsp; <b>
+                                                                    {{ invoice.i_status }} </b></p>
+                                                            <p>Hawker :&nbsp; <b>
+                                                                    {{ customer.hawker }} </b></p>
+
+                                                        </div>
                                                     </div>
+                                                    <div class="row">
+                                                        <table class="display table-bordered  table table-hover"
+                                                            style="width:95%; margin:auto">
+                                                            <tr>
+                                                                <th>Description</th>
+                                                                <th>Payable Amount</th>
+                                                                <th>Paid Amount</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>{{ invoice.i_month }}</td>
+                                                                <td>{{ invoice.i_amount }} ₹</td>
+                                                                <td>{{ invoice.i_paid }} ₹</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="sign" style="float: right;padding: 25px;">
+                                                        <div class="row">
+                                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Signature-WangBowen.png"
+                                                                width="100px" alt="">
+                                                        </div>
+                                                    </div>
+
                                                 </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-primary"
+                                                        onclick="print_this('{{invoice.i_sr}}')"
+                                                        target="_blank">Print</button>
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-primary" onclick="print_this('{{invoice.i_sr}}')"
-                                                    target="_blank">Print</button>
-
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- End Invoice Modal -->
+
+                                    <!-- Invoice Update Modal -->
+                                    <div id="{{invoice.i_sr}}a" class="modal fade pay_amount">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title title text-center fees_title"><b>Invoice
+                                                            Update</b></h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{% url 'invoice_update' pk=invoice.pk %}"
+                                                        method="POST" enctype="multipart/form-data" class="invoice">
+                                                        {% csrf_token %}
+                                                        <div class="row">
+
+                                                            <input type="hidden" name="c_id"
+                                                                value="{{customer.customer_id}}">
+
+                                                            <div class="col-md-4">
+                                                                <label>Invoice Date</label>
+                                                                <input name="i_date" type="date" class="form-control"
+                                                                    value="{{current_date|date:'Y-m-d'}}">
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <label>Invoice ID</label>
+                                                                <input name="i_sr" type="text" class="form-control"
+                                                                    value="{{invoice.i_sr}}">
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <label>Invoice Status</label>
+                                                                <select name="i_status" class="form-control"
+                                                                    id="teacher_gender">
+                                                                    <option value="Paid">Paid</option>
+                                                                    <option value="Partial">Partial</option>
+                                                                    <option value="Unpaid">Unpaid</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <input type="hidden" name="customer_id" id=""
+                                                                value="{{customer.customer_id}}" class="form-control">
+
+                                                            <div class="col-md-4">
+                                                                <label>Month</label>
+                                                                <input name="i_month" type="text" class="form-control"
+                                                                    id="i_month" value="{{invoice.i_month}}">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>Payable Amount</label>
+                                                                <input name="i_amount" type="text" class="form-control"
+                                                                    id="total_amount" value="{{invoice.i_amount}}">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label>Paid</label>
+                                                                <input name="i_paid" type="text" class="form-control"
+                                                                    id="total_amount" value="{{invoice.i_paid}}">
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label>Note<span name="required"
+                                                                        style="color:red; padding-left:5px">*</span></label>
+                                                                <textarea name='i_description' type="text"
+                                                                    class="form-control" style="height:37px"
+                                                                    value="{{invoice.i_description}}"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-primary" type="submit"
+                                                                name="button">Save</button>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                <!-- End Invoice Modal -->
+                                    <!-- endmodal Invoice Update -->
 
-<!-- Invoice Update Modal -->
-<div id="{{invoice.i_sr}}a" class="modal fade pay_amount">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title title text-center fees_title"><b>Invoice Update</b></h4>
-            </div>
-            <div class="modal-body">
-                <form action="{% url 'invoice_update' pk=invoice.pk %}" method="POST" enctype="multipart/form-data"
-                    class="invoice">
-                    {% csrf_token %}
-                    <div class="row">
+                                    <!-- delete Invoice Modal -->
+                                    <div id="deleteModal" class="modal fade">
+                                        <div class="modal-dialog modal-confirm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
 
-                        <input type="hidden" name="c_id" value="{{customer.customer_id}}">
-
-                        <div class="col-md-4">
-                            <label>Invoice Date</label>
-                            <input name="i_date" type="date" class="form-control" value="{{current_date|date:'Y-m-d'}}">
-                        </div>
-
-                        <div class="col-md-4">
-                            <label>Invoice ID</label>
-                            <input name="i_sr" type="text" class="form-control" value="{{invoice.i_sr}}">
-                        </div>
-
-                        <div class="col-md-4">
-                            <label>Invoice Status</label>
-                            <select name="i_status" class="form-control" id="teacher_gender">
-                                <option value="Paid">Paid</option>
-                                <option value="Partial">Partial</option>
-                                <option value="Unpaid">Unpaid</option>
-                            </select>
-                        </div>
-
-                        <input type="hidden" name="customer_id" id="" value="{{customer.customer_id}}"
-                            class="form-control">
-
-                        <div class="col-md-4">
-                            <label>Month</label>
-                            <input name="i_month" type="text" class="form-control" id="i_month" value="{{invoice.i_month}}">
-                        </div>
-                        <div class="col-md-4">
-                            <label>Payable Amount</label>
-                            <input name="i_amount" type="text" class="form-control" id="total_amount"
-                                value="{{invoice.i_amount}}">
-                        </div>
-                        <div class="col-md-4">
-                            <label>Paid</label>
-                            <input name="i_paid" type="text" class="form-control" id="total_amount"
-                                value="{{invoice.i_paid}}">
-                        </div>
-                        <div class="col-md-12">
-                            <label>Note<span name="required" style="color:red; padding-left:5px">*</span></label>
-                            <textarea name='i_description' type="text" class="form-control" style="height:37px" value="{{invoice.i_description}}"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit" name="button">Save</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- endmodal Invoice Update -->
+                                                    <h4 class="modal-title">Are you sure?</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Do you really want to delete these records? This process cannot
+                                                        be
+                                                        undone.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-info"
+                                                        data-dismiss="modal">Cancel</button>
+                                                    <a href="{% url 'delete_invoice' pk=invoice.pk %}"><button
+                                                            type="button" class="btn btn-danger">Delete</button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end delete Invoice model -->
 
 
                                 </td>
@@ -224,23 +275,25 @@
                                     <h4 class="modal-title title text-center fees_title"><b>Pay Amount</b></h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{% url 'collect_amount' pk=customer.pk %}" method="POST" enctype="multipart/form-data"
-                                        class="invoice">
+                                    <form action="{% url 'collect_amount' pk=customer.pk %}" method="POST"
+                                        enctype="multipart/form-data" class="invoice">
                                         {% csrf_token %}
                                         <div class="row">
-                    
+
                                             <input type="hidden" name="c_id" value="{{customer.customer_id}}">
-                    
+
                                             <div class="col-md-4">
                                                 <label>Invoice Date</label>
-                                                <input name="i_date" type="date" class="form-control" value="{{current_date|date:'Y-m-d'}}">
+                                                <input name="i_date" type="date" class="form-control"
+                                                    value="{{current_date|date:'Y-m-d'}}">
                                             </div>
-                    
+
                                             <div class="col-md-4">
                                                 <label>Invoice ID</label>
-                                                <input name="i_id" type="text" class="form-control" value="{{invoice_no}}">
+                                                <input name="i_id" type="text" class="form-control"
+                                                    value="{{invoice_no}}">
                                             </div>
-                    
+
                                             <div class="col-md-4">
                                                 <label>Invoice Status</label>
                                                 <select name="i_status" class="form-control" id="teacher_gender">
@@ -250,49 +303,53 @@
                                                 </select>
                                             </div>
 
-                                            <input type="hidden" name="customer_name" id="" value="{{customer.customer_name}}"
-                                                    class="form-control">
+                                            <input type="hidden" name="customer_name" id=""
+                                                value="{{customer.customer_name}}" class="form-control">
 
                                             <div class="col-md-4">
                                                 <label>Month</label>
                                                 <select name="i_month" class="form-control" id="teacher_gender">
-                                                <option value="January">January</option>
-                                                <option value="Fabruary">Fabruary</option>
-                                                <option value="March">March</option>
-                                                <option value="April">April</option>
-                                                <option value="May">May</option>
-                                                <option value="June">June</option>
-                                                <option value="July">July</option>
-                                                <option value="August">August</option>
-                                                <option value="September">September</option>
-                                                <option value="October">October</option>
-                                                <option value="November">November</option>
-                                                <option value="December">December</option>
+                                                    <option value="January">January</option>
+                                                    <option value="Fabruary">Fabruary</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="August">August</option>
+                                                    <option value="September">September</option>
+                                                    <option value="October">October</option>
+                                                    <option value="November">November</option>
+                                                    <option value="December">December</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Total Amount</label>
-                                                <input name="i_total" type="text" class="form-control" id="total_amount" value="0">
+                                                <input name="i_total" type="text" class="form-control" id="total_amount"
+                                                    value="0">
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Paid</label>
-                                                <input name="i_paid" type="text" class="form-control" id="total_amount" value="0">
+                                                <input name="i_paid" type="text" class="form-control" id="total_amount"
+                                                    value="0">
                                             </div>
                                             <div class="col-md-12">
-                                                <label>Note<span name="required" style="color:red; padding-left:5px">*</span></label>
-                                                <textarea name='i_desc' type="text" class="form-control" style="height:37px"></textarea>
+                                                <label>Note<span name="required"
+                                                        style="color:red; padding-left:5px">*</span></label>
+                                                <textarea name='i_desc' type="text" class="form-control"
+                                                    style="height:37px"></textarea>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button class="btn btn-primary" type="submit" name="button">Save</button>
                                         </div>
-                    
+
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-<!-- endmodal -->
+                    <!-- endmodal -->
                 </div>
             </div>
         </div>
