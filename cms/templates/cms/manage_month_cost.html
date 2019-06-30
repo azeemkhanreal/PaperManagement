@@ -1,0 +1,34 @@
+{% extends "cms/base.html" %}
+{% block content %}
+
+<div class="container">
+
+    <div class="container" id="customer" class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fas fa-rupee-sign"></i> Manage Monthly Cost</h3>
+        </div>
+        <form action="{% url 'manage_month_cost' %}" method="POST" enctype="multipart/form-data" class="add_customer_form">
+            {% csrf_token %}
+            <div class="row">
+            {% for month in month_cost %}
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>{{month.month}}</label>
+                        <input type="text" name="{{month.month}}" id="" value="{{month.amount}}"
+                            class="form-control">
+                    </div>
+                </div>
+                  {% endfor %}
+                  
+                <button type="submit" name="button">Save</button>
+            </div>
+            <h6 style="color:red"></h6>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

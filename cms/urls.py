@@ -11,6 +11,7 @@ urlpatterns = [
     path('invoice_update/<int:pk>', views.invoice_update, name="invoice_update"),
     path('delete_invoice/<int:pk>', views.delete_invoice, name="delete_invoice"),
     path('search_customer/', views.search_customer, name="search_customer"),
+    path('manage_month_cost/', views.manage_month_cost, name="manage_month_cost"),
 
 
     # Hawker Routing

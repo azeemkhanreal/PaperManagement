@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404, HttpResponseRedirect
 import datetime
-from .models import Customer, Hawker, Invoice
+from .models import Customer, Hawker, Invoice, monthCost
 from django.db.models import Q, Sum
 import calendar
 
@@ -8,8 +8,9 @@ current_date = datetime.date.today()
 # Get Last Month
 now = datetime.datetime.now()
 last_month = now.month-1 if now.month > 1 else 12
-month_name = "January Fabruary March April May June July August September October November December".split()[
+last_month_name = "January February March April May June July August September October November December".split()[
     last_month-1]
+all_month_name = "January February March April May June July August September October November December".split()
 
 ###################
 # CMS Dashboard
@@ -25,7 +26,7 @@ def cms_home(request):
         all_hawker = Hawker.objects.all()
 
         collect_month_amount = Invoice.objects.filter(
-            i_status='Paid', i_month=month_name).aggregate(Sum('i_paid'))
+            i_status='Paid', i_month=last_month_name).aggregate(Sum('i_paid'))
 
         collect_annual_amount = Invoice.objects.filter(
             i_status='Paid').aggregate(Sum('i_paid'))
@@ -37,6 +38,14 @@ def cms_home(request):
             i_status='Paid').annotate(Sum('i_paid'))
         for x in collection_chart:
             print(x.i_month)
+
+        # if month cost is not set in database then automatically generate data
+        month_cost = monthCost.objects.all()
+
+        if not month_cost:
+            for x in all_month_name:
+                month_cost_info = monthCost(month=x, amount=0)
+                month_cost_info.save()
 
         return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'all_hawker': all_hawker, 'collection_chart': collection_chart, 'collect_month_amount': collect_month_amount, 'collect_annual_amount': collect_annual_amount, 'username': username})
 
@@ -110,8 +119,10 @@ def collect_amount(request, pk):
             invoice_sr = new_invoice_no
             invoice_status = request.POST['i_status']
             invoice_month = request.POST['i_month']
+            month_amount = monthCost.objects.get(
+                month=invoice_month)  # get monthcost
+            invoice_amount = month_amount.amount  # month_cost = invoice month amount
             invoice_description = request.POST['i_desc']
-            invoice_amount = request.POST['i_total']
             invoice_name = request.POST['customer_name']
             invoice_paid = request.POST['i_paid']
             i_customer = Customer.objects.get(customer_name=invoice_name)
@@ -121,7 +132,10 @@ def collect_amount(request, pk):
 
             return HttpResponseRedirect("")
 
-        return render(request, 'cms/customer/collect_amount.html', {'customer': customer_filter, 'current_date': current_date, 'invoice_no': new_invoice_no, 'all_invoice': all_invoice, 'username': username})
+        # Monthly Cost
+        month_cost = monthCost.objects.all()
+
+        return render(request, 'cms/customer/collect_amount.html', {'customer': customer_filter, 'current_date': current_date, 'invoice_no': new_invoice_no, 'all_invoice': all_invoice, 'username': username, 'month_cost': month_cost})
 
     else:
         return redirect('login')
@@ -223,6 +237,58 @@ def search_customer(request):
                 return redirect('customer_report')
         else:
             return redirect('customer_report')
+
+    else:
+        return redirect('login')
+
+
+def manage_month_cost(request):
+    if request.session.has_key('username'):
+        username = request.session['username']
+
+        month_cost = monthCost.objects.all()
+
+        # Update monthly_cost in database
+        if request.method == 'POST':
+            for x in month_cost:
+                if x.month == 'January':
+                    x.amount = request.POST['January']
+                    x.save()
+                if x.month == 'February':
+                    x.amount = request.POST['February']
+                    x.save()
+                if x.month == 'March':
+                    x.amount = request.POST['March']
+                    x.save()
+                if x.month == 'April':
+                    x.amount = request.POST['April']
+                    x.save()
+                if x.month == 'May':
+                    x.amount = request.POST['May']
+                    x.save()
+                if x.month == 'June':
+                    x.amount = request.POST['June']
+                    x.save()
+                if x.month == 'July':
+                    x.amount = request.POST['July']
+                    x.save()
+                if x.month == 'August':
+                    x.amount = request.POST['August']
+                    x.save()
+                if x.month == 'September':
+                    x.amount = request.POST['September']
+                    x.save()
+                if x.month == 'October':
+                    x.amount = request.POST['October']
+                    x.save()
+                if x.month == 'November':
+                    x.amount = request.POST['November']
+                    x.save()
+                if x.month == 'December':
+                    x.amount = request.POST['December']
+                    x.save()
+                message = 'Data Update'
+        return render(request, 'cms/manage_month_cost.html', {'month_cost': month_cost})
 
     else:
         return redirect('login')
