@@ -31,7 +31,7 @@ def cms_home(request):
         collection_chart = Invoice.objects.filter(
             i_status='Paid').annotate(Sum('i_paid'))
 
-        return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'collection_chart':collection_chart,'collect_month_amount':collect_month_amount,'collect_annual_amount':collect_annual_amount 'all_hawker': all_hawker, 'username': username})
+        return render(request, 'cms/dashboard.html', {'all_customer': all_customer, 'collection_chart':collection_chart,'collect_month_amount':collect_month_amount,'collect_annual_amount':collect_annual_amount, 'all_hawker': all_hawker, 'username': username})
     
     else:
         return redirect('login')
