@@ -19,8 +19,8 @@ def add_hawker(request):
             hawker_info.save()
             return redirect('add_hawker')
         else:
-            return render(request, 'cms/hawker/add_hawker.html', {'current_date': current_date})
-        return render(request,'cms/hawker/add_hawker.html')
+            return render(request, 'cms/hawker/add_hawker.html', {'current_date': current_date, 'username': username})
+        return render(request, 'cms/hawker/add_hawker.html', {'username': username})
     else:
         return redirect('login')
 
@@ -36,7 +36,7 @@ def hawker_report(request):
         # filter all customer details
         all_hawker = Hawker.objects.all()
 
-        return render(request, 'cms/hawker/hawker_report.html', {'hawker': all_hawker})
+        return render(request, 'cms/hawker/hawker_report.html', {'hawker': all_hawker, 'username': username})
     else:
         return redirect('login')
 

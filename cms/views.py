@@ -90,7 +90,7 @@ def customer_report(request):
         all_customer = Customer.objects.all()
         all_hawker = Hawker.objects.all()
 
-        return render(request, 'cms/customer/customer_report.html', {'customers': all_customer, 'all_hawker': all_hawker})
+        return render(request, 'cms/customer/customer_report.html', {'customers': all_customer, 'all_hawker': all_hawker, 'username': username})
 
     else:
         return redirect('login')
@@ -288,7 +288,7 @@ def manage_month_cost(request):
                     x.amount = request.POST['December']
                     x.save()
                 message = 'Data Update'
-        return render(request, 'cms/manage_month_cost.html', {'month_cost': month_cost})
+        return render(request, 'cms/manage_month_cost.html', {'month_cost': month_cost, 'username': username})
 
     else:
         return redirect('login')
